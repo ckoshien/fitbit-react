@@ -1,34 +1,66 @@
-import React from 'react'
-import { render, forRange, GRotate } from './tools';
+import React from "react";
+import { render, forRange, GRotate } from "./tools";
 
 const App = () => (
-    <svg>
-        <section x="50%" y="50%">
-            <section width="95%" height="95%">
-            { forRange( 1, 12, i =>
-                <Mark angle={ i * 30 } length={10} />
-            )}
-
-            { forRange( 1, 60, i =>
-                i % 5 &&
-                    <Mark angle={ i * 6 } length={5} />
-            )}
-            </section>
-
-            <Hand id="hours" size={0.5} />
-            <Hand id="minutes" size={0.8} />
-        </section>
+  <svg>
+    <mask id="mask">
+      <circle cx="150" cy="150" r="125" />
+    </mask>
+    <svg mask="#mask" width="100%" height="100%">
+      <gradientRect
+        width="100%"
+        height="100%"
+        gradient-type="linear"
+        gradient-x1="0"
+        gradient-y1="50"
+        gradient-x2="0"
+        gradient-y2="100%-50"
+        gradient-color1="blue"
+        gradient-color2="#a6efff"
+      />
     </svg>
-)
+    <arc
+        x="60"
+        y="60"
+        width="180"
+        height="180"
+        fill="#555555"
+        arc-width="1"
+        start-angle="0"
+        sweep-angle="360"
+      />
+    <section x="50%" y="50%">
+      <section width="95%" height="95%">
+        {forRange(1, 12, (i) => (
+          <Mark angle={i * 30} length={10} />
+        ))}
 
-const Mark = ({ angle, length }) =>
-    <GRotate angle={ angle }>
-        <line x1="0" x2="0" y1="-50%" y2={`-50%+${ length }`} fill="#A0A0A0" />
-    </GRotate>
+        {forRange(1, 60, (i) => i % 5 && <Mark angle={i * 6} length={5} />)}
+      </section>
 
-const Hand = ({ id, size }) =>
-    <GRotate id={id}>
-        <line x1="0" x2="0" y1={ -50 * size + "%" } y2={ 10 * size + '%' } fill="white" />
-    </GRotate>
+      <Hand id="hours" size={0.5} color={"white"} />
+      <Hand id="minutes" size={0.8} color={"white"} />
+      <Hand id="seconds" size={0.8} color={"red"} />
+    </section>
+  </svg>
+);
 
-render( App );
+const Mark = ({ angle, length }) => (
+  <GRotate angle={angle}>
+    <line x1="0" x2="0" y1="-50%" y2={`-50%+${length}`} fill="#A0A0A0" />
+  </GRotate>
+);
+
+const Hand = ({ id, size, color }) => (
+  <GRotate id={id}>
+    <line
+      x1="0"
+      x2="0"
+      y1={-50 * size + "%"}
+      y2={10 * size + "%"}
+      fill={color}
+    />
+  </GRotate>
+);
+
+render(App);
