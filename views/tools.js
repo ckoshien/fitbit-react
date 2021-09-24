@@ -30,8 +30,5 @@ export const GRotate = ({ angle, children, ...rest }) =>
             { children }
         </g>
 
-export const Number = ({ id, size, ...rest }) =>
-    <Fragment>
-        <text id={ id + '-int' } {...rest, size } textAnchor="end"/>
-        <text id={ id + '-fr' } {...rest } size={ size * 0.8 } textAnchor="start"/>
-    </Fragment>
+export const Number = ({ id, size, x,y, color }) =>
+    <text id={ id + '-int' } x={x} y={y} textAnchor="middle" fill={color}/>

@@ -1,7 +1,7 @@
 import clock from "clock";
 import document from "document";
 import { HeartRateSensor } from "heart-rate";
-import { GRotate } from './tools'
+import { GRotate, Masked, Number } from './tools'
 
 // Update the clock every second
 //clock.granularity = "seconds";
@@ -9,7 +9,8 @@ import { GRotate } from './tools'
 const Watchface = () => {
   const hoursHand = GRotate( 'hours' ),
     minutesHand = GRotate( 'minutes' ),
-    secondsHand = GRotate( 'seconds' );
+    secondsHand = Masked( 'masked' ),
+    heartRate = Number('heartRate');
 
     setInterval(() => {
       const today = new Date(),
@@ -27,6 +28,7 @@ const Watchface = () => {
     console.log("This device has a HeartRateSensor!");
     const hrm = new HeartRateSensor();
     hrm.addEventListener("reading", () => {
+      heartRate(hrm.heartRate);
       console.log(`Current heart rate: ${hrm.heartRate}`);
     });
     hrm.start();

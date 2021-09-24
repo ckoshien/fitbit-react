@@ -8,13 +8,16 @@ export const GRotate = id => {
     }
 }
 
-export const Number = ( id, precision ) => {
-    const int = document.getElementById( id + '-int' ),
-          fr = document.getElementById( id + '-fr' ),
-          factor = 10 ** precision;
-    
+export const Number = (id) => {
+    const int = document.getElementById( id + '-int' )
     return num => {
         int.text = num | 0;
-        fr.text = '.' + Math.round( ( num % 1 ) * factor );
+    }
+}
+
+export const Masked = (id) => {
+    const elm = document.getElementById( id  )
+    return angle => {
+        elm.sweepAngle = angle | 0;
     }
 }
